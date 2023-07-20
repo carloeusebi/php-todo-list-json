@@ -9,20 +9,32 @@ class Task
     public function connect(): bool
     {
         if (!file_exists(self::FILE_PATH)) return false;
-        $this->tasks = json_decode(file_get_contents(self::FILE_PATH)) ?? [];
+        $this->tasks = json_decode(file_get_contents(self::FILE_PATH), true) ?? [];
         return true;
     }
 
     public function get(): array|null
     {
+        foreach ($this->tasks as &$task) {
+            $task['completed'] = $task['completed'] ? true : false;
+        }
         return $this->tasks;
     }
 
-    public function update(array $data): array|null
+    public function update(array $data): array
     {
-        $task_to_update = array_search($data['id'], array_column($this->tasks, 'id'));
+        $updated_task = [];
 
-        var_dump($task_to_update);
-        die();
+        foreach ($this->tasks as &$task) {
+            if ($task['id'] == $data['id']) {
+                $task['completed'] = $data['completed'] ?? $task['completed'];
+                $task['task'] = $data['task'] ?? $task['task'];
+                $updated_task = $task;
+            }
+        }
+
+        file_put_contents(self::FILE_PATH, json_encode($this->tasks));
+
+        return $updated_task;
     }
 }

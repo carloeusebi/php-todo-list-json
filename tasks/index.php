@@ -10,8 +10,6 @@ $controller = new TasksController($request, $response);
 
 $method = $request->getMethod();
 
-echo $method;
-die();
 
 if ($method === 'get') {
     $controller->get();

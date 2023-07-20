@@ -31,13 +31,15 @@ class TasksController
     public function save()
     {
         $data = $this->request->getBody();
-        $errors = [];
 
-        var_dump($data);
-        die();
+        if ($data['id']) {
+            $new_task = $this->task->update($data);
+            // else $errors = $this->task->create($data);
 
-        if ($data['id'])
-            $errors = $this->task->update($data);
-        // else $errors = $this->task->create($data);
+            if (empty($new_task))
+                $this->response->response(404, ['error' => 'Task not found']);
+            else
+                $this->response->response(201, $new_task);
+        }
     }
 }
