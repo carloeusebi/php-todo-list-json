@@ -25,7 +25,19 @@ class TasksController
         if (!$tasks) {
             $this->response->response(404, ['error' => 'No Tasks found']);
         }
-
         $this->response->response(200, $tasks);
+    }
+
+    public function save()
+    {
+        $data = $this->request->getBody();
+        $errors = [];
+
+        var_dump($data);
+        die();
+
+        if ($data['id'])
+            $errors = $this->task->update($data);
+        // else $errors = $this->task->create($data);
     }
 }
