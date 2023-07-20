@@ -22,10 +22,10 @@ class TasksController
     public function get()
     {
         $tasks = $this->task->get();
-        if ($tasks) {
-            $this->response->response(200, $tasks);
+        if (!$tasks) {
+            $this->response->response(404, ['error' => 'No Tasks found']);
         }
 
-        $this->response->response(404, ['error' => 'No Tasks found']);
+        $this->response->response(200, $tasks);
     }
 }
