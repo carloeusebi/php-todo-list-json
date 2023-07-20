@@ -13,7 +13,7 @@ class Task
         return file_exists(self::FILE_PATH);
     }
 
-    public function get(): array
+    public function get(): array|null
     {
         return json_decode(file_get_contents(self::FILE_PATH));
     }

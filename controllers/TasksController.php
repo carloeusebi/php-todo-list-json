@@ -26,6 +26,6 @@ class TasksController
             $this->response->response(200, $tasks);
         }
 
-        $this->response->response(404);
+        $this->response->response(404, ['error' => 'No Tasks found']);
     }
 }
