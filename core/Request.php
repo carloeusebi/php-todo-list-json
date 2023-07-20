@@ -20,6 +20,11 @@ class Request
                 $data[$key] = $value;
             }
         }
+
+        if (!$data) {
+            $data = (array) json_decode(file_get_contents("php://input"));
+        }
+
         return $data;
     }
 }

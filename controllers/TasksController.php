@@ -48,4 +48,24 @@ class TasksController
 
         $this->response->response(400, $errors);
     }
+
+    public function delete()
+    {
+        $errors = [];
+        $data = $this->request->getBody();
+
+        $id = $data['id'] ?? null;
+
+        if (!$id) {
+            $this->response->response(400, ['error' => 'No ID provided']);
+        }
+
+        $errors = $this->task->delete($id);
+
+        if ($errors) {
+            $this->response->response(404, $errors);
+        }
+
+        $this->response->response(203);
+    }
 }

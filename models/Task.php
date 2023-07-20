@@ -63,6 +63,22 @@ class Task
     }
 
 
+    public function delete(int $id): array
+    {
+        $errors = [];
+
+        $filtered_tasks = array_filter($this->tasks, fn ($task) => $task['id'] != $id);
+
+        if (count($this->tasks) === count($filtered_tasks)) $errors['no-item-deleted'] = 'No items deleted';
+
+        $this->tasks = $filtered_tasks;
+
+        self::writeOnFile();
+
+        return $errors;
+    }
+
+
     protected function writeOnFile()
     {
         file_put_contents(self::FILE_PATH, json_encode($this->tasks));

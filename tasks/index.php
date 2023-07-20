@@ -15,4 +15,8 @@ if ($method === 'get') {
     $controller->get();
 } elseif ($method === 'post') {
     $controller->save();
+} elseif ($method === 'delete') {
+    $controller->delete();
+} else {
+    $response->response(405);
 }
