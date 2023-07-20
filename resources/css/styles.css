@@ -3,3 +3,16 @@ body {
   height: 100vh;
   color: white;
 }
+
+.task-text {
+  cursor: pointer;
+}
+
+.fa-trash-can {
+  color: red;
+  cursor: pointer;
+}
+
+.fa-trash-can:hover {
+  color: rgb(168, 0, 0)
+}

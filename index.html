@@ -10,6 +10,11 @@
     href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.css'
     integrity='sha512-lp6wLpq/o3UVdgb9txVgXUTsvs0Fj1YfelAbza2Kl/aQHbNnfTYPMLiQRvy3i+3IigMby34mtcvcrh31U50nRw=='
     crossorigin='anonymous'>
+  <!-- fontawesome -->
+  <link rel='stylesheet'
+    href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.css'
+    integrity='sha512-Z0kTB03S7BU+JFU0nw9mjSBcRnZm2Bvm0tzOX9/OuOuz01XQfOpa0w/N9u6Jf2f1OAdegdIPWZ9nIZZ+keEvBw=='
+    crossorigin='anonymous' />
   <!-- styles -->
   <link rel="stylesheet" href="resources/css/styles.css" type="text/css">
   <!-- axios -->
@@ -25,8 +30,42 @@
 <body>
 
   <div id="app">
-    <div class="container mt-5">
-      <h1>{{ helloWorld }}</h1>
+    <div class="container">
+      <header class="text-center my-5">
+        <h1>Todo List</h1>
+      </header>
+      <main>
+        <div class="card">
+          <ul class="list-group list-unstyled ">
+            <li v-for="task in tasks" :key="task.id"
+              class="p-1 border-top border-bottom d-flex justify-content-between align-items-center"
+              :class="{'text-decoration-line-through ' : task.completed}">
+              <div @click="handleTaskClick(task.id)"
+                class="task-text flex-grow-1 p-3">
+                {{task.task}}
+              </div>
+              <div>
+                <i class="fa-solid fa-trash-can px-4"></i>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="my-5 card">
+          <div class=" p-3">
+            <form @submit.prevent="addTask">
+              <label for="new-task">Insert new task</label>
+              <div>
+                <div class="d-flex justify-space-between align-items-center ">
+                  <input type="text" id="new-task" class="form-control"
+                    v-model.trim="newTask">
+                  <button class="btn btn-success px-5 ms-2">Add</button>
+                </div>
+              </div>
+          </div>
+          </form>
+        </div>
+      </main>
     </div>
   </div>
 
