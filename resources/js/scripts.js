@@ -33,6 +33,12 @@ const app = createApp({
 
 			this.newTask = '';
 		},
+		deleteTask(id) {
+			const params = {
+				data: { id },
+			};
+			axios.delete(baseURL, params);
+		},
 	},
 	mounted() {
 		axios.get(baseURL).then(({ data }) => {
