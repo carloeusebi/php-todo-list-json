@@ -11,7 +11,6 @@ const app = createApp({
 	},
 	methods: {
 		handleTaskClick(id) {
-			console.log(this.tasks);
 			const taskToUpdate = this.tasks.find(task => task.id === id);
 
 			taskToUpdate.completed = !taskToUpdate.completed;
@@ -27,8 +26,8 @@ const app = createApp({
 				headers: { 'Content-Type': 'multipart/form-data' },
 			};
 
-			axios.post(baseURL, params, config).then(({ data }) => {
-				this.tasks.push(data);
+			axios.post(baseURL, params, config).then(res => {
+				this.tasks.push(res.data);
 			});
 
 			this.newTask = '';
@@ -38,6 +37,8 @@ const app = createApp({
 				data: { id },
 			};
 			axios.delete(baseURL, params);
+
+			this.tasks = this.tasks.filter(task => task.id !== id);
 		},
 	},
 	mounted() {
