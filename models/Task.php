@@ -8,9 +8,12 @@ class Task
     protected string $task;
     protected bool $completed;
 
-    protected $file;
+    public function connect(): bool
+    {
+        return file_exists(self::FILE_PATH);
+    }
 
-    public function get()
+    public function get(): array
     {
         return json_decode(file_get_contents(self::FILE_PATH));
     }

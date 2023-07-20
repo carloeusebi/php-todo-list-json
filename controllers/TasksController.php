@@ -13,6 +13,10 @@ class TasksController
         $this->request = $request;
         $this->response = $response;
         $this->task = new Task();
+        $result = $this->task->connect();
+        if (!$result) {
+            $this->response->response(500, ['error' => 'Cannot connect to database']);
+        }
     }
 
     public function get()
