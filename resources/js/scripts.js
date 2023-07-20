@@ -15,11 +15,18 @@ const app = createApp({
 	methods: {
 		handleTaskClick(id) {
 			const taskToUpdate = this.tasks.find(task => task.id === id);
-			taskToUpdate.completed = !taskToUpdate.completed;
 
 			const params = { ...taskToUpdate };
 
-			axios.post(baseURL, params, config);
+			axios.post(baseURL, params, config).then(res => {
+				const newTask = res.data;
+				this.tasks = this.tasks.map(task => {
+					if (task.id == newTask.id) {
+						task = { ...newTask };
+					}
+					return task;
+				});
+			});
 		},
 		addTask() {
 			if (!this.newTask) return;

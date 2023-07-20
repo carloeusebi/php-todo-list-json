@@ -16,9 +16,6 @@ class Task
 
     public function get(): array|null
     {
-        foreach ($this->tasks as &$task) {
-            $task['completed'] = $task['completed'] ? true : false;
-        }
         return $this->tasks;
     }
 
@@ -26,13 +23,16 @@ class Task
     {
         $errors = [];
 
-        foreach ($this->tasks as &$task) {
+        $this->tasks = array_map(function ($task) use ($data) {
             if ($task['id'] == $data['id']) {
-                $task['completed'] = $data['completed'] ?? $task['completed'];
+                $task['completed'] = !$task['completed'];
+                // leaving door open to change task name in the future :)
                 $task['task'] = $data['task'] ?? $task['task'];
                 $this->last_inserted_task = $task;
             }
-        }
+            return $task;
+        }, $this->tasks);
+
         self::writeOnFile();
 
         return $errors;
