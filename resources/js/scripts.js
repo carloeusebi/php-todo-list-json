@@ -1,6 +1,9 @@
 const baseURL = 'http://localhost/php-todo-list-json/tasks/';
 
 const { createApp } = Vue;
+const config = {
+	headers: { 'Content-Type': 'multipart/form-data' },
+};
 
 const app = createApp({
 	data() {
@@ -12,18 +15,17 @@ const app = createApp({
 	methods: {
 		handleTaskClick(id) {
 			const taskToUpdate = this.tasks.find(task => task.id === id);
-
 			taskToUpdate.completed = !taskToUpdate.completed;
+
+			const params = { ...taskToUpdate };
+
+			axios.post(baseURL, params, config);
 		},
 		addTask() {
 			if (!this.newTask) return;
 
 			const params = {
 				task: this.newTask,
-			};
-
-			const config = {
-				headers: { 'Content-Type': 'multipart/form-data' },
 			};
 
 			axios.post(baseURL, params, config).then(res => {
