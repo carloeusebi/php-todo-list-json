@@ -30,16 +30,22 @@ class TasksController
 
     public function save()
     {
+        $errors = [];
         $data = $this->request->getBody();
 
-        if ($data['id']) {
-            $new_task = $this->task->update($data);
-            // else $errors = $this->task->create($data);
-
-            if (empty($new_task))
-                $this->response->response(404, ['error' => 'Task not found']);
-            else
-                $this->response->response(201, $new_task);
+        if (empty($data)) {
+            $this->response->response(400, ['error' => 'No body sent']);
         }
+
+        if (isset($data['id'])) $errors = $this->task->update($data);
+        else $errors = $this->task->create($data);
+
+
+        if (empty($errors)) {
+            $new_task = $this->task->getLastInsertedTask();
+            $this->response->response(201, $new_task);
+        }
+
+        $this->response->response(400, $errors);
     }
 }
