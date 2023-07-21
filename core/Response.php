@@ -2,7 +2,7 @@
 
 class Response
 {
-    public function response(int $http_code, array $content = [])
+    public static function response(int $http_code, array $content = [])
     {
         http_response_code($http_code);
         if ($content) {

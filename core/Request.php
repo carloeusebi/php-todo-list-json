@@ -2,20 +2,35 @@
 
 class Request
 {
-    public function getMethod(): string
+    public static function getMethod(): string
     {
         return strtolower($_SERVER['REQUEST_METHOD']);
     }
 
-    public function getBody(): array|null
+    public static function isGet(): bool
+    {
+        return self::getMethod() === 'get';
+    }
+
+    public static function isPost(): bool
+    {
+        return self::getMethod() === 'post';
+    }
+
+    public static function isDelete(): bool
+    {
+        return self::getMethod() === 'delete';
+    }
+
+    public static function getBody(): array|null
     {
         $data = [];
 
-        if ($this->getMethod() === 'get') {
+        if (self::isGet()) {
             foreach ($_GET as $key => $value) {
                 $data[$key] = $value;
             }
-        } elseif ($this->getMethod() === 'post') {
+        } elseif (self::isPost()) {
             foreach ($_POST as $key => $value) {
                 $data[$key] = $value;
             }

@@ -4,18 +4,13 @@ require_once __DIR__ . '/../controllers/TasksController.php';
 require_once __DIR__ . '/../core/Request.php';
 require_once __DIR__ . '/../core/Response.php';
 
-$request = new Request();
-$response = new Response();
-$controller = new TasksController($request, $response);
+$controller = new TasksController();
 
-$method = $request->getMethod();
-
-
-if ($method === 'get') {
+if (Request::isGet()) {
     $controller->get();
-} elseif ($method === 'post') {
+} elseif (Request::isPost()) {
     $controller->save();
-} elseif ($method === 'delete') {
+} elseif (Request::isDelete()) {
     $controller->delete();
 } else {
     $response->response(405);
