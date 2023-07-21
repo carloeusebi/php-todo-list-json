@@ -13,5 +13,5 @@ if (Request::isGet()) {
 } elseif (Request::isDelete()) {
     $controller->delete();
 } else {
-    $response->response(405);
+    Response::response(405);
 }
